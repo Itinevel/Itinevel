@@ -1,0 +1,107 @@
+{/* Reviews & Comments and Transport Modes Section */}
+        <div className="flex justify-between mt-8 space-x-12 mx-4">
+          {/* Left Section - Reviews & Comments */}
+          <div
+            className="w-2/3 p-6 bg-white rounded-xl shadow-xl"
+            style={{
+              border: "1px solid transparent",
+              backgroundImage:
+                "linear-gradient(white, white), linear-gradient(to right,#90cdf4, #ffffff)",
+              backgroundClip: "padding-box, border-box",
+              backgroundOrigin: "border-box",
+            }}
+          >
+            <div className="flex items-center justify-between mb-6 mx-1">
+              <h2 className="text-xl font-semibold text-gray-800 tracking-wider drop-shadow-lg">
+                Reviews & Comments
+              </h2>
+              <div className="flex items-center drop-shadow-lg">
+                <span className="text-l font-bold text-gray-900 mr-2">4.3</span>
+                <div className="flex items-center mr-3">
+                  <FaStar className="text-yellow-400 text-xl drop-shadow-md" />
+                  <FaStar className="text-yellow-400 text-xl drop-shadow-md" />
+                  <FaStar className="text-yellow-400 text-xl drop-shadow-md" />
+                  <FaStar className="text-yellow-400 text-xl drop-shadow-md" />
+                  <FaStarHalfAlt className="text-yellow-400 text-xl drop-shadow-md" />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200">
+                <div className="flex items-center mb-2 drop-shadow-lg">
+                  <span className="text-sm text-gray-900 mr-2">John Doe</span>
+                  <div className="flex items-center">
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStarHalfAlt className="text-yellow-400 text-sm" />
+                  </div>
+                </div>
+                <p className="text-gray-900 italic drop-shadow-lg">
+                  "Amazing experience! Everything was well organized."
+                </p>
+              </div>
+              <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200">
+                <div className="flex items-center mb-2 drop-shadow-lg">
+                  <span className="text-sm text-gray-900 mr-2">Jane Smith</span>
+                  <div className="flex items-center">
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStarHalfAlt className="text-yellow-400 text-sm" />
+                  </div>
+                </div>
+                <p className="text-gray-900 italic drop-shadow-lg">
+                  "The transport options were convenient and timely."
+                </p>
+              </div>
+              <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200">
+                <div className="flex items-center mb-2 drop-shadow-lg">
+                  <span className="text-sm text-gray-900 mr-2">Alice Brown</span>
+                  <div className="flex items-center">
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStar className="text-yellow-400 text-sm mr-1" />
+                    <FaStarHalfAlt className="text-yellow-400 text-sm" />
+                  </div>
+                </div>
+                <p className="text-gray-900 italic drop-shadow-lg">
+                  "Would definitely recommend this itinerary to others."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Section - Transport Modes */}
+          <div
+  className="w-1/3 p-6 bg-white rounded-xl shadow-xl self-start"
+  style={{
+    border: "1px solid transparent",
+    backgroundImage:
+      "linear-gradient(white, white), linear-gradient(to right, #ffffff, #68d391)",
+    backgroundClip: "padding-box, border-box",
+    backgroundOrigin: "border-box",
+  }}
+>
+  <h2 className="text-xl font-semibold text-gray-800 mb-4 tracking-wider drop-shadow-lg">
+    Transport Modes
+  </h2>
+  <div className="flex flex-wrap gap-2">
+  {transportModes.map((mode, index) => (
+    <div
+      key={index}
+      className="flex items-center p-2 bg-white rounded-xl shadow-md border border-gray-200 cursor-pointer hover:shadow-lg transition-shadow duration-300"
+    >
+      {getTransportIcon(mode)}
+      <span className="text-lg font-medium text-gray-800 capitalize ml-2">{mode}</span>
+    </div>
+  ))}
+</div>
+
+</div>
+
+        </div>

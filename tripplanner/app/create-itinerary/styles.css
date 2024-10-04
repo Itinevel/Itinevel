@@ -1,0 +1,21 @@
+/* Hide Scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  /* Style Scrollbar */
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 12px;
+  }
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+  }
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #4CAF50, #81C784);
+    border-radius: 6px;
+  }
+  
