@@ -58,56 +58,57 @@ const ItineraryMarketPage: React.FC = () => {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-r from-white to-blue-200 flex justify-center relative">
+    <div className="h-screen bg-gradient-to-r  from-blue-50  to-blue-100 flex justify-center relative">
       <div className="max-w-full lg:max-w-7xl w-full flex relative">
         {/* Filter Container - Fixed on the left */}
         <aside
-          className={`w-full md:w-1/5 p-4 bg-white shadow-lg fixed lg:static lg:mt-0 mt-16 left-0 z-40 md:z-auto transition-transform transform md:translate-x-0 ${
+          className={`w-3/5 md:w-1/5  h-screen  bg-white  bg-gradient-to-b from-blue-50 via-blue-100/50 to-blue-200 fixed lg:static   left-0 z-40 md:z-auto transition-transform transform md:translate-x-0 ${
             isFilterVisible ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
           {/* Close button for mobile */}
-          <div className="md:hidden absolute top-4 right-4 z-50">
+          <div className="md:hidden  absolute top-14 right-4 z-50">
+        
             <button
               onClick={toggleFilterVisibility}
-              className="bg-red-500 text-white p-2 rounded-full shadow-lg"
-            >
-              <FaTimes />
+              className="bg-red-500 flex text-white p-2  text-xs rounded-xl shadow-lg"
+            >   <FaTimes className='mt-[2px]  mr-[2px]' /> 
+              
             </button>
           </div>
 
-          <div className="h-screen lg:h-full overflow-y-auto no-scrollbar lg:pt-12">
+          <div className="h-screen  w-5/6 lg:w-[30vh] 2xl:w-[25vh] mx-6 2xl:mx-3 overflow-y-auto no-scrollbar ">
             <FilterComponent plans={plans} onFilterChange={handleFilterChange} />
           </div>
         </aside>
 
         {/* Market Cards - Scrollable content */}
         <div className="flex-1 w-full ml-auto md:w-4/5 h-full">
-          <div className="pt-6">
+          <div className="pt-16 lg:pt-6">
             <h2 className="hidden md:block text-2xl lg:text-3xl font-bold text-center text-blue-600 pt-12 -mb-3">
               Discover Amazing Itineraries
             </h2>
 
             {/* Sorting Feature */}
-            <div className="flex justify-end items-center space-x-2">
+            <div className="flex justify-end items-center space-x-2 mr-8 ">
               <div
                 onClick={toggleOrder}
-                className="flex items-center justify-center p-2 border border-gray-300 rounded-full cursor-pointer shadow-sm hover:bg-gray-100 transition duration-200"
+                className="flex items-center justify-center lg:p-2 p-1 border border-gray-300 rounded-full cursor-pointer shadow-sm hover:bg-gray-100 transition duration-200"
               >
                 <FaSort
-                  className={`text-lg transition-transform duration-300 ${
+                  className={`text-sm lg:text-lg transition-transform duration-300 ${
                     isAscending ? 'rotate-0' : 'rotate-180'
                   } text-blue-500`}
                 />
               </div>
-              <label htmlFor="sort" className="text-gray-600 text-sm font-medium">
+              <label htmlFor="sort" className="text-gray-600 text-xs lg:text-sm font-medium">
                 Sort by:
               </label>
               <select
                 id="sort"
                 value={sortOption}
                 onChange={handleSortChange}
-                className="p-2 border border-gray-300 rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="lg:p-2 p-1 border text-xs lg:text-sm border-gray-300 rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="name">Name</option>
                 <option value="price">Price</option>

@@ -176,10 +176,10 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
   };
 
   return (
-    <div className="space-y-4 relative p-4 bg-white rounded-md font-amifer">
+    <div className="space-y-4 relative p-4  mt-16 rounded-md font-amifer">
       {/* Search Filter */}
-      <div className="sticky top-0 bg-white z-10">
-        <label htmlFor="search" className="block text-sm font-medium text-gray-700  items-center">
+      <div className="z-10">
+        <label htmlFor="search"  className=" flex text-xs font-medium text-gray-700  items-center">
           <FaSearch className="mr-2 text-blue-600" /> Search
         </label>
         <input
@@ -188,13 +188,13 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search itineraries"
-          className="mt-1 block w-full p-2 text-black border border-gray-300 rounded-md shadow-sm"
+          className="mt-1 block w-full p-2 text-xs text-black border border-gray-300 rounded-md shadow-sm"
         />
       </div>
 
       {/* Budget Filter */}
-      <div className="sticky top-12 bg-white  z-10">
-        <label className="block text-sm font-medium text-gray-700 flex items-center">
+      <div className="sticky top-12  z-10">
+        <label className=" text-xs font-medium text-gray-700 flex items-center">
           <FaSearchDollar className="mr-2 text-blue-600" /> Budget (TND)
         </label>
         <div className="flex space-x-2 mt-1">
@@ -202,7 +202,7 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
             type="number"
             value={budgetRange[0]}
             onChange={(e) => handleBudgetInputChange(0, Number(e.target.value))}
-            className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+            className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-xs text-black"
             min="0"
             max="1000000"
           />
@@ -210,7 +210,7 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
             type="number"
             value={budgetRange[1]}
             onChange={(e) => handleBudgetInputChange(1, Number(e.target.value))}
-            className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+            className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-xs text-black"
             min="0"
             max="1000000"
           />
@@ -258,8 +258,8 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
       </div>
 
           {/* Total Cost Filter */}
-          <div className="sticky top-12 bg-white pb-2 z-10">
-        <label className="block text-sm font-medium text-gray-700 flex items-center">
+          <div className=" top-12 pb-2 z-10">
+        <label className="text-xs font-medium text-gray-700 flex items-center">
           <FaSearchDollar className="mr-2 text-blue-600" /> Total Cost (TND)
         </label>
         <div className="flex space-x-2 mt-1">
@@ -267,7 +267,7 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
             type="number"
             value={totalCostRange[0]}
             onChange={(e) => handleTotalCostInputChange(0, Number(e.target.value))}
-            className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+            className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-xs text-black"
             min="0"
             max="1000000"
           />
@@ -275,7 +275,7 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
             type="number"
             value={totalCostRange[1]}
             onChange={(e) => handleTotalCostInputChange(1, Number(e.target.value))}
-            className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+            className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-xs text-black"
             min="0"
             max="1000000"
           />
@@ -324,7 +324,7 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
 
       {/* Days Range Filter */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 flex items-center">
+        <label className=" text-xs font-medium text-gray-700 flex items-center">
           <FaCalendarAlt className="mr-2 text-blue-600" /> Days Range
         </label>
         <div className="mt-3">
@@ -365,7 +365,7 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
               />
             )}
           />
-          <div className="flex justify-between mt-2 text-gray-700">
+          <div className="flex justify-between mt-2 text-xs text-gray-700">
             <span>{selectedDaysRange[0]} Days</span>
             <span>{selectedDaysRange[1]} Days</span>
           </div>
@@ -378,10 +378,10 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
     className="flex justify-between items-center cursor-pointer"
     onClick={() => setIsCountriesExpanded(!isCountriesExpanded)}
   >
-    <label className="block text-sm font-medium text-gray-700 flex items-center">
+    <label className=" text-xs font-medium text-gray-700 flex items-center">
       <FaGlobe className="mr-2 text-blue-600" /> Countries
     </label>
-    {isCountriesExpanded ? <FaChevronUp className="text-black" /> : <FaChevronDown className="text-black" />}
+    {isCountriesExpanded ? <FaChevronUp className="text-black  text-xs" /> : <FaChevronDown className="text-black text-xs" />}
   </div>
   {isCountriesExpanded && (
     <div className="mt-2">
@@ -390,9 +390,9 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
         value={countrySearchQuery}
         onChange={handleCountrySearchChange}
         placeholder="Search countries..."
-        className="w-full p-2 border text-black border-gray-300 rounded-md shadow-sm mb-2"
+        className="w-full p-2 border text-xs text-black border-gray-300 rounded-md shadow-sm mb-2"
       />
-      <div className="max-h-24 lg:max-h-64  overflow-y-auto"> {/* Adjusted height for scrolling */}
+      <div className=" lg:max-h-36 max-h-24 overflow-y-auto"> {/* Adjusted height for scrolling */}
 
         {countries
           .filter(country => country.name.toLowerCase().includes(countrySearchQuery))
@@ -406,7 +406,7 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
                 onChange={handleCountryChange}
                 className="mr-2"
               />
-              <label htmlFor={code} className="text-black">
+              <label htmlFor={code} className=" text-sm text-black">
                 {name}
               </label>
             </div>
@@ -451,7 +451,7 @@ console.log(`Plan "${plan.name}" matches: ${matchesCountries}`);
       <div>
         <button
           onClick={handleResetFilters}
-          className="w-full bg-red-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full bg-red-500 text-xs text-white py-2 px-4 rounded-md shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           Reset Filters
         </button>

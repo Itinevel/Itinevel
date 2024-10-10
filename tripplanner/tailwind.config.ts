@@ -13,11 +13,23 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      scrollbar:{
+        'extra-thin':'2px',
+      },
       fontFamily: {
         amifer: ['Amifer', 'sans-serif'],  // Register the Amifer font
       },
+      colors: {
+        customPink: '#F4CDC2',  // Add your custom color here
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
+  variants: {
+    scrollbar: ['rounded'], // Optional: Enables rounded scrollbar variant
+  },
+
 };
 export default config;

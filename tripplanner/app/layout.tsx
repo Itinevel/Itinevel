@@ -27,25 +27,28 @@ const RootLayout = ({ session, children }: RootLayoutProps) => {
 
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <SessionWrapper session={session}>
-          {/* Fixed Navbar */}
-          <Navbar className="fixed top-0 left-0 w-full z-50" onNavigate={handleNavigation} />
+  <body className={inter.className}>
+    <SessionWrapper session={session}>
+      <div className="flex flex-col h-screen">
+        {/* Fixed Navbar */}
+        <Navbar className="fixed top-0 left-0 w-full z-50" onNavigate={handleNavigation} />
 
-          {/* Conditionally render spinner when loading */}
-          {loading && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-70">
-              <Spinner />
-            </div>
-          )}
+        {loading && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-100">
+            <Spinner />
+          </div>
+        )}
 
-          {/* Main content with adjusted padding and spacing */}
-          <main className="min-h-screen     h-full overflow-auto">
-            {children}
-          </main>
-        </SessionWrapper>
-      </body>
-    </html>
+        {/* Main content with padding and custom scrollbar */}
+        <main className="flex-1 overflow-auto  ">
+          {children}
+        </main>
+      </div>
+    </SessionWrapper>
+  </body>
+</html>
+
+  
   );
 };
 

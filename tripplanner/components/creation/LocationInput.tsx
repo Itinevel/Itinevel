@@ -292,7 +292,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
             ]
         };
         return (
-            <div key={index} className="relative mb-6 p-6 border border-gray-200 rounded-xl shadow-lg bg-white transition-all hover:shadow-2xl hover:-translate-y-1 transform">
+            <div key={index} className="relative mb-6 p-6 2xl:mx-10 border border-gray-200 rounded-xl shadow-lg bg-white transition-all hover:shadow-2xl hover:-translate-y-1 transform">
                 {/* Image Section */}
                 <div className=" mb-8">
                     {displayImages.length === 0 ? (
@@ -319,7 +319,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                         </div>
                     ) : (
                         <div className="relative">
-                            <div className="grid grid-cols-3  gap-x-14 lg:gap-x-6 ">
+                            <div className="grid grid-cols-3  gap-x-14 lg:gap-x-8 2xl:gap-x-4 ">
                                 {/* Main Image */}
                                 <div className="relative col-span-2 w-[90%] h-64">
                                     {displayImages.length > 0 && (
@@ -393,7 +393,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                         value={locationName}
                         onChange={handleNameChange}
                         placeholder="Enter Location Name"
-                        className="w-full p-3 border border-gray-300 rounded-xl text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                        className="w-full p-3 border border-gray-300 rounded-xl text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                     />
                 </div>
         
@@ -403,7 +403,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                         <select
                             value={locationType}
                             onChange={handleTypeChange}
-                            className="w-full p-3 border border-gray-300 rounded-xl text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            className="w-full p-3 border border-gray-300 rounded-xl text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                         >
                             <option value="" disabled>Select Type</option>
                             {types.map((type, idx) => (
@@ -419,7 +419,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                             value={subTypeState}
                             onChange={handleSubTypeChange}
                             disabled={!locationType}
-                            className="w-full p-3 border border-gray-300 rounded-xl text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            className="w-full p-3 border border-gray-300 rounded-xl text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                         >
                             <option value="" disabled>Select Subtype</option>
                             {locationType && subTypes[locationType]?.map((subTypeOption, idx) => (
@@ -440,7 +440,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                             value={query}
                             onChange={handleQueryChange}
                             placeholder={`Search Location ${index + 1}`}
-                            className="w-full pl-10 p-3 border border-gray-300 rounded-xl text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            className="w-full pl-10 p-3 border border-gray-300 rounded-xl text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                         />
                     </div>
         
@@ -450,7 +450,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                                 <li
                                     key={suggestion.place_id}
                                     onClick={() => onSuggestionClick(index, suggestion)}
-                                    className="p-3 cursor-pointer hover:bg-gray-100 text-gray-700 rounded-xl transition-colors"
+                                    className="p-3 cursor-pointer hover:bg-gray-100 text-sm text-gray-700 rounded-xl transition-colors"
                                 >
                                     {suggestion.description}
                                 </li>
@@ -467,7 +467,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                             type="time"
                             value={arrivalTimeState}
                             onChange={handleArrivalTimeChange}
-                            className="w-full pl-10 p-3 border border-gray-300 rounded-xl text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            className="w-full pl-10 p-3 border border-gray-300 rounded-xl text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                         />
                     </div>
                     <div className="relative w-1/2">
@@ -476,7 +476,7 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                             type="time"
                             value={departureTimeState}
                             onChange={handleDepartureTimeChange}
-                            className="w-full pl-10 p-3 border border-gray-300 rounded-xl text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            className="w-full pl-10 p-3 border border-gray-300 rounded-xl text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                         />
                     </div>
                 </div>
@@ -485,28 +485,28 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
                 <div className="mb-4">
     <div className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-x-1 mb-4">
         <div className="relative flex-1">
-            <FaPlusCircle className="absolute top-1/2 transform -translate-y-1/2 left-2 text-gray-500" />
+            <FaPlusCircle className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-500" />
             <input
                 type="text"
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
                 placeholder="Item Name"
-                className="w-full pl-8 sm:pl-10 p-3 sm:p-3 border border-gray-300 rounded-xl text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm sm:text-base"
+                className="w-full pl-8 sm:pl-10 p-3 sm:p-3 border border-gray-300 rounded-xl text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all  sm:text-base"
             />
         </div>
-        <div className="relative w-full sm:w-32">
+        <div className="relative w-full sm:w-32 mx-2">
             <FaPriceTag className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-500" />
             <input
                 type="number"
                 value={itemPrice}
                 onChange={(e) => setItemPrice(e.target.value === '' ? '' : Number(e.target.value))}
                 placeholder="Price"
-                className="w-full pl-10 p-3 border border-gray-300 rounded-xl text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm sm:text-base"
+                className="w-full pl-10 p-3 border  border-gray-300 rounded-xl text-xs  text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all  sm:text-base"
             />
         </div>
         <button
             onClick={handleAddItem}
-            className="flex items-center justify-center text-xs sm:text-sm bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 sm:py-2 sm:px-6 rounded-xl transition-all shadow-lg w-full sm:w-auto"
+            className="flex items-center justify-center text-xs sm:text-sm bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 sm:py-2 sm:px-4 rounded-xl transition-all shadow-lg w-full sm:w-auto"
         >
             <FaPlusCircle className="mr-2" />
             Add Item
@@ -515,12 +515,12 @@ const handleImageImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
 
     <div className="mt-4">
         {items.map((item, idx) => (
-            <div key={idx} className="flex justify-between p-2 border-b border-gray-200">
+            <div key={idx} className="flex justify-between p-2  text-sm border-b border-gray-200">
                 <span className="text-gray-700">{item.name}</span>
                 <span className="text-gray-700">${item.price.toFixed(2)}</span>
             </div>
         ))}
-        <div className="flex justify-end mt-2 font-bold text-gray-900">
+        <div className="flex justify-end mt-2  text-sm font-bold text-gray-900">
             Total Price: ${totalPrice.toFixed(2)}
         </div>
     </div>

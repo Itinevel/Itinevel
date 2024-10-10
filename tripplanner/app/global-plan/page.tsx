@@ -97,13 +97,13 @@ const GlobalPlanPage: React.FC<GlobalPlanPageProps> = ({ planId }) => {
   const [dayWiseCostData, setDayWiseCostData] = useState<{ day: string; cost: number }[]>([]);
   const [pieChartData, setPieChartData] = useState<{ name: string; value: number }[]>([]);
   const [totalDays, setTotalDays] = useState(0);  // To store total number of days
-
+  const [isMobile, setIsMobile] = useState(false);
   
   const [currentPage, setCurrentPage] = useState(0);
   
   const dynamicCards = Object.keys(subtypeCounts); // The rest of the cards are dynamic
 
-const isMobile = window.innerWidth <= 768; // Adjust based on actual breakpoint for mobile
+ // Adjust based on actual breakpoint for mobile
 const cardsPerPage = isMobile ? 4 : 8; // Mobile: 4 cards per page, Large screen: 8 cards per page
 const totalDynamicCards = dynamicCards.length;
 
@@ -145,6 +145,19 @@ if (currentPage === 0) {
   dynamicCardsPage = dynamicCards.slice(startIdx, endIdx);
 }
 
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768); // Adjust based on actual breakpoint for mobile
+  };
+
+  // Set initial value
+  handleResize();
+
+  // Update on resize
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
   useEffect(() => {
     const fetchPlan = async () => {
       try {
@@ -159,7 +172,7 @@ if (currentPage === 0) {
         // Store the plan and itineraries in the state
         setPlan(plan);
         setItineraries(itineraries);
-  
+        setTotalDays(itineraries.length);
         // Initialize variables for price calculation
         let totalTransportPrice = 0;
         let accommodationPrice = 0;
@@ -229,8 +242,8 @@ if (currentPage === 0) {
         totalCost = totalLocationPrice + totalTransportPrice;
         // Update the state with day-wise cost data
         setDayWiseCostData(dayWiseCosts);
-        setTotalDays(totalDays);  // Set total days
-          // Set total cost
+    
+         
         // Initialize a set to hold unique transport types
         const transportTypes = new Set<string>();
   
@@ -503,7 +516,7 @@ if (currentPage === 0) {
   };
 
   return (
-    <div className=" mt-12 min-h-screen bg-gradient-to-r from-white to-blue-200 bg-gray-50 p-4 pl-5 font-amifer">
+    <div className=" pt-12 min-h-screen bg-gradient-to-r from-white to-blue-200 bg-gray-50 p-4 pl-5 font-amifer">
       <div className="max-w-7xl mx-auto">
         {/* Upper Half - Images */}
         <div className="relative ">
@@ -576,18 +589,18 @@ if (currentPage === 0) {
           {currentPage > 0 && (
             <button
               onClick={handlePreviousPage}
-              className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white w-7 h-7 rounded-lg shadow-lg hover:bg-indigo-600 transition-all duration-300 flex items-center justify-center transform hover:scale-105 "
+              className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white w-6 h-6 lg:w-7 lg:h-7 rounded-lg shadow-lg hover:bg-indigo-600 transition-all duration-300 flex items-center justify-center transform hover:scale-105 "
             >
-              <FaArrowLeft className="text-l" />
+              <FaArrowLeft className="text-sm lg:text-l" />
             </button>
           )}
 
           {currentPage < totalPages - 1 && (
             <button
               onClick={handleNextPage}
-              className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white w-7 h-7 rounded-lg shadow-lg hover:bg-indigo-600 transition-all duration-300 flex items-center justify-center transform hover:scale-105 mr-2 absolute right-0"
+              className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white w-6 h-6 lg:w-7 lg:h-7 rounded-lg shadow-lg hover:bg-indigo-600 transition-all duration-300 flex items-center justify-center transform hover:scale-105 mr-2 absolute right-0"
             >
-              <FaArrowRight className="text-xl" />
+              <FaArrowRight className="test-sm lg:text-l" />
             </button>
           )}
         </div>
@@ -678,40 +691,41 @@ if (currentPage === 0) {
   </div>
 
   {/* Charts Section */}
-  <div className="flex flex-col sm:flex-row sm:justify-between space-y-4 sm:space-y-0 mx-36">
-    {/* Pie Chart */}
-    <div className="w-full flex justify-start">
-      <PieChart width={275} height={250}>
-        <Pie
-          data={pieChartData} // Use the dynamic pie chart data from state
-          cx={125}
-          cy={100}
-          innerRadius={40}
-          outerRadius={80}
-          fill="#8884d8"
-          paddingAngle={4}
-          dataKey="value" // The key in your data object for the value to display
-        >
-          {pieChartData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend  />
-      </PieChart>
-    </div>
-
-    {/* Bar Chart */}
-    <div className="w-full sm:w-1/2 flex justify-center">
-      <BarChart className="mt-2" width={250} height={200}  data={dayWiseCostData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="day" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey="cost" fill="#8884d8" barSize={20} />
-      </BarChart>
-    </div>
+  <div className="flex flex-col sm:flex-row sm:justify-between space-y-4 sm:space-y-0 mx-4 sm:mx-36">
+  {/* Pie Chart */}
+  <div className="w-full flex justify-center">
+    <PieChart width={window.innerWidth < 640 ? 225 : 275} height={window.innerWidth < 640 ? 190 : 250}>
+      <Pie
+        data={pieChartData}
+        cx={window.innerWidth < 640 ? 90 : 125}
+        cy={window.innerWidth < 640 ? 75 : 100}
+        innerRadius={window.innerWidth < 640 ? 30 : 40}
+        outerRadius={window.innerWidth < 640 ? 60 : 80}
+        fill="#8884d8"
+        paddingAngle={4}
+        dataKey="value"
+      >
+        {pieChartData.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        ))}
+      </Pie>
+      <Tooltip />
+      <Legend layout="horizontal" verticalAlign="bottom" align="center" wrapperStyle={{ fontSize: window.innerWidth < 640 ? '13px' : '14px' }} />
+    </PieChart>
   </div>
+
+  {/* Bar Chart */}
+  <div className="w-full sm:w-1/2 flex justify-start">
+    <BarChart className="mt-2" width={window.innerWidth < 640 ? 250 : 250} height={window.innerWidth < 640 ? 150 : 200} data={dayWiseCostData}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="day" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="cost" fill="#8884d8" barSize={window.innerWidth < 640 ? 15 : 20} />
+    </BarChart>
+  </div>
+</div>
+
 </div>
 
 

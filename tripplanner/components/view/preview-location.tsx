@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TripLocation } from '@/interfaces/Itinerary';
 import { FaExclamationTriangle, FaCheckCircle, FaInfoCircle, FaTimesCircle, FaChevronDown, FaChevronUp, FaImages } from 'react-icons/fa';
-import testImage2 from './test2.jpg'; // Placeholder image
+
 
 interface LocationProps {
   location: TripLocation;
@@ -82,7 +82,7 @@ const LocationComponent: React.FC<LocationProps> = ({ location, onViewGallery })
         </div>
       ) : (
         <div className="relative">
-          <img className="w-full h-48 object-cover" src={testImage2.src} alt="Placeholder" />
+          
           <button
             onClick={() => onViewGallery([])}
             className="absolute bottom-6 right-6 flex items-center justify-center bg-white text-xs md:text-sm font-semibold text-gray-700 border-2 border-black-300 px-4 md:px-6 py-1 rounded-lg shadow-lg hover:bg-gray-100 hover:text-gray-800 hover:scale-105 transition-transform duration-300 focus:outline-none"

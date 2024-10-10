@@ -185,7 +185,10 @@ const GoogleMapComponent: React.FC<GoogleMapComponentProps> = ({
     }
   }, [selectedLocations, isMapInitialized]);
 
-  return <div ref={googleMapRef} style={{ width: "100%", height: "100vh" }} />;
+  return <div
+  ref={googleMapRef}
+  className="w-full h-[53vh] mb-20 lg:mb-0 lg:h-[91vh] 2xl:h-[94vh] "
+/>;
 };
 
 export default GoogleMapComponent;

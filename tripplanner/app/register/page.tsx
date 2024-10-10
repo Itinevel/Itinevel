@@ -96,7 +96,7 @@
     };
 
     return (
-      <div className="h-screen pt-6 flex flex-col md:flex-row">
+      <div className="h-screen flex flex-col md:flex-row">
         {/* Popup Component */}
         <Popup
           message="Registration successful! Please check your email to confirm your account."
@@ -116,11 +116,11 @@
 
         {/* Data Fields Section */}
         <div className="w-full h-full  lg:w-1/3 bg-white flex flex-col justify-center items-center p-6 lg:p-12">
-          <h1 className="mt-2 text-2xl lg:text-3xl font-bold text-black mb-2 font-amifer">Register</h1>
-          <p className="text-black mb-6 font-amifer">Create your account to get started</p>
+          <h1 className="mt-4 text-2xl lg:pt-8  lg:text-2xl font-bold text-black  font-amifer">Register</h1>
+          <p className="text-black mb-6 text-sm lg:text-md  font-amifer">Create your account to get started</p>
 
-          {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-green-500">Registration successful!</p>}
+          {error && <p className="text-red-500 text-sm lg:text-md ">{error}</p>}
+          {success && <p className="text-green-500 text-sm lg:text-md">Registration successful!</p>}
 
           <form className="w-full" onSubmit={handleSubmit}>
             {/* Name Field */}
@@ -243,17 +243,17 @@
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+              className="w-full bg-indigo-500 hover:bg-indigo-600 text-sm lg:text-base text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
             >
               Register
             </button>
           </form>
 
           {/* Login Link */}
-          <div className="mt-6 text-center">
-            <p className="text-black font-amifer">
+          <div className="mt-4 text-center">
+            <p className="text-black lg:text-base text-sm font-amifer">
               Already have an account?{' '}
-              <a href="/login" className="text-indigo-500 hover:text-indigo-600">
+              <a href="/login" className="text-indigo-500 text-sm  lg:text-base hover:text-indigo-600">
                 Login
               </a>
             </p>

@@ -69,6 +69,7 @@ const CreatePlan = ({ initialPlan }: any) => {
   const userId = session?.user?.id;
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [totalDays, setTotalDays] = useState(() => initialPlan ? Object.keys(initialPlan.itineraries).length : 1);
 
   useEffect(() => {
     if (status === 'loading') {
@@ -120,7 +121,7 @@ const CreatePlan = ({ initialPlan }: any) => {
         
         if (parsedPlan?.itineraries) {
           setPlan(parsedPlan);
-          
+          setTotalDays(parsedPlan.totalDays || Object.keys(parsedPlan.itineraries).length);
           const initialDay = Number(Object.keys(parsedPlan.itineraries)[0]);
           setSelectedDay(initialDay);
           
@@ -425,36 +426,41 @@ const handleSaveTitleDescription = () => {
 
 
 const addDay = () => {
-  // Find the highest existing day number
-  const highestDayNumber = days.length > 0 
-    ? Math.max(...days.map(day => Number(day))) 
-    : 0;
+  const newDayNumber = days.length > 0 
+    ? Math.max(...days.map(day => Number(day))) + 1 
+    : 1;
 
-  // The new day number should be the next consecutive number
-  const newDayNumber = highestDayNumber + 1;
-  const newDayKey = newDayNumber.toString();
+  // Add the new day
+  setDays(prevDays => [...prevDays, newDayNumber.toString()]);
 
-  // Update the days array with the new day
-  setDays(prevDays => [...prevDays, newDayKey]);
-
-  // Add a new day to the plan's itineraries
   setPlan(prevPlan => {
     const newItineraries = {
       ...prevPlan.itineraries,
       [newDayNumber]: createNewItineraryStructure(newDayNumber)
     };
 
-    return {
+    const updatedTotalDays = Object.keys(newItineraries).length;
+
+    const updatedPlan = {
       ...prevPlan,
       itineraries: newItineraries,
-      totalDays: newDayNumber,
+      totalDays: updatedTotalDays,  // Update totalDays dynamically
     };
+
+    // Save updated plan to session storage
+    sessionStorage.setItem('plan-itineraries', JSON.stringify(updatedPlan));
+    console.log('Updated Total Days:', updatedTotalDays);
+
+    return updatedPlan;
   });
 
-  // Automatically switch to the newly added day
   setSelectedDay(newDayNumber);
-  setSelectedLocations([]); // Clear locations for the new day
 };
+
+
+
+
+
 
 
 const handleItineraryUpdate = (day: number, newItinerary: ItineraryData) => {
@@ -642,16 +648,16 @@ const filteredCountries = countriesData.filter(country =>
     <div className="lg:flex md:flex min-h-screen bg-gradient-to-r from-gray-100 to-blue-100" style={{ fontFamily: 'Amifer, sans-serif' }}>
       {/* Left Section - Day Parser */}
       <div className="w-full lg:w-[55%] md:w-[55%]  flex flex-col shadow-lg">
-  <div className="pt-6 mr-2 ml-2 mb-4 mt-16 bg-gradient-to-r from-gray-100 to-blue-75 flex items-center gap-4">
+  <div className="pt-6 mr-1 ml-2 mb-4 mt-12 bg-gradient-to-r from-gray-100 to-blue-75 flex items-center gap-1 2xl:gap-4 ">
       <button
         onClick={handlePreviousDays}
         disabled={startDayIndex === 0}
-        className={`p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 ${startDayIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+        className={`p-2 rounded-full bg-blue-500 text-[8px] lg:text-sm text-white hover:bg-blue-600 ${startDayIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         <FaArrowLeft />
       </button>
     <div className="flex items-center  justify-between  w-full ">
-      <div className="items-center space-x-1 grid grid-cols-10">
+      <div className="items-center space-x-1 2xl:space-x-2 grid grid-cols-10">
         {days.slice(startDayIndex, startDayIndex + daysToShow).map((day, index) => (
           <button
             key={index}
@@ -668,13 +674,13 @@ const filteredCountries = countriesData.filter(country =>
                 })) || []
               );
             }}
-            className={`relative py-1 sm:py-2 sm:text-[14px] sm:px-4 rounded-full font-semibold text-xs  transition-all transform hover:scale-105 shadow-md ${
+            className={`relative py-1 sm:py-2 lg:text-[14px] lg:px-4 rounded-full font-semibold text-[9px] px-1  transition-all transform hover:scale-105 shadow-md ${
               selectedDay === Number(day)
                 ? 'bg-gradient-to-r from-blue-500 to-blue-300 text-white'
                 : 'bg-white text-gray-800 hover:bg-gray-200'
             }`}
           >
-            <span className='text-[9px] lg:text-xs'>{`Day ${initialPlan ? Number(day) + 1 : Number(day)}`}</span>
+            <span className='text-[9px] lg:text-[10px]  2xl:text-sm'>{`Day ${initialPlan ? Number(day) + 1 : Number(day)}`}</span>
             {selectedDay === Number(day) && (
               <div className="absolute top-0 right-2 w-2 h-2 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-ping" />
             )}
@@ -684,7 +690,7 @@ const filteredCountries = countriesData.filter(country =>
       <button
         onClick={handleNextDays}
         disabled={startDayIndex + daysToShow >= days.length}
-        className={`p-2 ml-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 ${startDayIndex + daysToShow >= days.length ? 'opacity-50 cursor-not-allowed' : ''}`}
+        className={`p-2 ml-1 rounded-full bg-blue-500 text-[8px]  lg:text-sm text-white hover:bg-blue-600 ${startDayIndex + daysToShow >= days.length ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         <FaArrowRight />
       </button>
@@ -692,17 +698,17 @@ const filteredCountries = countriesData.filter(country =>
 
     <button
       onClick={addDay}
-      className=" py-2 px-4 text-sm font-semibold rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center space-x-2"
+      className=" py-2 px-2 lg:text-[14px] text-[10px]  font-semibold rounded-full bg-green-500 text-white hover:bg-green-600 flex items-center space-x-1"
     >
-      <FaPlus />
-      <span> Day</span>
+      <FaPlus/>
+      <span className='hidden lg:visible'>Day</span>
     </button>
   </div>
 
-  <div className="flex mx-4 lg:mx-0 p-0 lg:p-4 h-[calc(100vh-170px)] overflow-y-auto">
+  <div className="flex mx-4 lg:mx-0 p-0 lg:p-4 h-[calc(100vh-170px)] overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-blue-500 scrollbar-track-gray-200">
     {days.map(day => (
       selectedDay === Number(day) && (
-        <div key={day} className="rounded-lg lg:w-[calc(100vh)] w-screen   ">
+        <div key={day} className="rounded-lg lg:w-[calc(100vh)] w-screen  lg:mx-12 ">
           {initialPlan?.itineraries && initialPlan.itineraries[Number(day)] ? (
             <CreateItineraryPage
               selectedDay={Number(day)}
@@ -724,14 +730,14 @@ const filteredCountries = countriesData.filter(country =>
   </div>
 </div>
         {/* Right Section - Map Component */}
-    <div className="w-full lg:h-full h-1/4 lg:w-[45%]  flex items-center justify-center bg-gray-200 shadow-lg">
-      <div className="w-full h-full ">
+    <div className="w-full lg:h-full  h-1/4 lg:w-[45%]  flex items-center justify-center bg-gray-200 shadow-lg">
+      <div className="w-full h-full  2xl:mt-[6vh] lg:mt-[9vh]">
         <GoogleMapComponent selectedLocations={selectedLocations} />
       </div>
     </div>
 
       {/* Save and Edit Global Details  and Sell  Buttons */}
-      <div className="fixed w-full lg:w-[55%] space-x-2 lg:space-x-0 md:w-[55%] bottom-0 left-0 p-2 bg-white border-t border-gray-300 flex justify-between">
+      <div className="fixed w-full lg:w-[55%]  space-x-2 lg:space-x-0 md:w-[55%] bottom-0 left-0 p-2 bg-white border-t border-gray-300 flex justify-between">
       <button
         onClick={() => {
           console.log("Opening Modal with plan data:", plan);
@@ -795,8 +801,8 @@ const filteredCountries = countriesData.filter(country =>
 
 {/* Modal for Editing Global Details */}
 {editModalOpen && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50  ">
+    <div className="bg-white p-6 h-[95vh] rounded-lg shadow-lg w-[90%] max-w-md overflow-y-auto">
       <h2 className="text-xl text-gray-700 text-center font-semibold mb-4">Edit Itinerary Details</h2>
 
       {/* Image Input */}
@@ -841,7 +847,7 @@ const filteredCountries = countriesData.filter(country =>
         type="text"
         value={title} // Make sure this value is set
         onChange={(e) => setTitle(e.target.value)} // Correctly update the state
-        className="w-full p-2 mb-4 border rounded-lg text-black"
+        className="w-full p-2 mb-4 text-sm border rounded-lg text-black"
         placeholder="Itinerary Title"
       />
 
@@ -850,7 +856,7 @@ const filteredCountries = countriesData.filter(country =>
       <textarea
         value={description} // Ensure the description is bound
         onChange={(e) => setDescription(e.target.value)} // Update the state
-        className="w-full p-2 border rounded-lg text-black"
+        className="w-full p-2 text-sm border rounded-lg text-black"
         rows={2}
         placeholder="Itinerary Description"
       />
@@ -861,13 +867,13 @@ const filteredCountries = countriesData.filter(country =>
         <input
           type="text"
           placeholder="Search for a country..."
-          className="w-full p-2 mb-4 border rounded-lg text-black"
+          className="w-full p-2 mb-4  text-sm border rounded-lg text-black"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <div className="h-40 overflow-auto border p-2 rounded-lg bg-gray-50">
+        <div className="h-40 lg:h-32 2xl:h-48 overflow-auto border p-2 rounded-lg bg-gray-50">
           {filteredCountries.map((country) => (
-            <div key={country.code} className="flex items-center space-x-2 mb-2">
+            <div key={country.code} className="flex text-sm items-center space-x-2 mb-2">
               <input
                 type="checkbox"
                 checked={selectedCountries.includes(country.name)}
@@ -900,7 +906,7 @@ const filteredCountries = countriesData.filter(country =>
           type="number"
           value={totalPrice} // Ensure this value is set
           onChange={(e) => setTotalPrice(e.target.value === '' ? '' : Number(e.target.value))} // Update the state
-          className="w-full p-2 border rounded-lg text-gray-700"
+          className="w-full p-2 border text-sm rounded-lg text-gray-700"
           placeholder="Enter Total Price"
         />
       </div>

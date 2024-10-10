@@ -110,7 +110,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-blue-300 text-gray-400 flex items-center justify-center p-10">
+    <div className="min-h-screen bg-gradient-to-br from-white to-blue-300 text-gray-400 flex items-center justify-center pt-10 lg:p-10 ">
       <div className="max-w-4xl w-full bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-3xl shadow-2xl p-12">
         {successMessage && (
           <div className="flex items-center justify-center mb-6">
@@ -128,7 +128,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
               value={profileData.name}
               onChange={handleChange}
               disabled={!isEditing}
-              className={`w-full pl-10 p-3 rounded-lg border-2 ${
+              className={`w-full pl-10 text-sm p-3 rounded-lg border-2 ${
                 isEditing
                   ? 'border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900'
                   : 'border-gray-300 text-gray-600 cursor-not-allowed'
@@ -145,7 +145,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
               value={profileData.surname}
               onChange={handleChange}
               disabled={!isEditing}
-              className={`w-full pl-10 p-3 rounded-lg border-2 ${
+              className={`w-full pl-10 p-3 text-sm rounded-lg border-2 ${
                 isEditing
                   ? 'border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900'
                   : 'border-gray-300 text-gray-600 cursor-not-allowed'
@@ -162,7 +162,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
               value={profileData.phone}
               onChange={handleChange}
               disabled={!isEditing}
-              className={`w-full pl-10 p-3 rounded-lg border-2 ${
+              className={`w-full pl-10 p-3  text-sm rounded-lg border-2 ${
                 isEditing
                   ? 'border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900'
                   : 'border-gray-300 text-gray-600 cursor-not-allowed'
@@ -179,7 +179,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
               name="email"
               value={profileData.email}
               disabled
-              className="w-full pl-10 p-3 rounded-lg border-2 border-gray-300 text-gray-600 cursor-not-allowed bg-white bg-opacity-50"
+              className="w-full pl-10 p-3 text-sm rounded-lg border-2 border-gray-300 text-gray-600 cursor-not-allowed bg-white bg-opacity-50"
               placeholder="Email"
             />
           </div>
@@ -187,12 +187,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
           {/* Old password field */}
           {isEditing && (
             <div className="relative flex items-center">
-              <BsLock className="absolute left-3 text-gray-400 text-xl" />
+              <BsLock className="absolute left-3  text-gray-400 text-xl" />
               <input
                 type="password"
                 value={oldPassword}
                 onChange={handleOldPasswordChange}
-                className="w-full pl-10 p-3 rounded-lg border-2 border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white bg-opacity-50"
+                className="w-full pl-10 p-3 text-sm rounded-lg border-2 border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white bg-opacity-50"
                 placeholder="Old Password"
               />
             </div>
@@ -207,7 +207,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
                 name="password"
                 value={profileData.password}
                 onChange={handlePasswordChange}
-                className="w-full pl-10 p-3 rounded-lg border-2 border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white bg-opacity-50"
+                className="w-full pl-10 p-3 text-sm rounded-lg border-2 border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white bg-opacity-50"
                 placeholder="New Password"
               />
             </div>
@@ -221,7 +221,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
                 type="password"
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
-                className="w-full pl-10 p-3 rounded-lg border-2 border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white bg-opacity-50"
+                className="w-full pl-10 p-3 text-sm rounded-lg border-2 border-blue-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white bg-opacity-50"
                 placeholder="Confirm Password"
               />
               {passwordError && <p className="text-red-500">{passwordError}</p>}
@@ -242,13 +242,13 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ userId }) => {
             <>
                            <button
                 onClick={handleSave}
-                className="px-8 py-3 bg-gradient-to-r from-light-blue-400 to-blue-500 rounded-full shadow-xl text-white font-semibold hover:from-blue-400 hover:to-light-blue-500 transition-transform transform hover:scale-105"
+                className="px-8 py-3 bg-gradient-to-r text-sm lg:text-md from-blue-400 to-blue-700 rounded-xl shadow-xl text-white font-semibold hover:from-blue-400 hover:to-blue-600 transition-transform transform hover:scale-105"
               >
                 Save
               </button>
               <button
                 onClick={handleEditClick}
-                className="px-8 py-3 bg-gradient-to-r from-gray-500 to-gray-700 rounded-full shadow-xl text-white font-semibold hover:from-gray-400 hover:to-gray-600 transition-transform transform hover:scale-105"
+                className="px-8 py-3 bg-gradient-to-r text-sm lg:text-md from-gray-500 to-gray-700 rounded-xl shadow-xl text-white font-semibold hover:from-gray-400 hover:to-gray-600 transition-transform transform hover:scale-105"
               >
                 Cancel
               </button>

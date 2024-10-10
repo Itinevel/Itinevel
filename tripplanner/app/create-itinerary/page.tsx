@@ -66,6 +66,8 @@ const CreateItineraryPage: React.FC<CreateItineraryPageProps> = ({ selectedDay, 
         if (parsedData.allTransports && parsedData.allTransports.length > 0) {
           console.log('Setting transports for day', selectedDay, ':', parsedData.allTransports);
           setAllTransports(parsedData.allTransports);
+          const initialTotalTransportPrice = calculateTransportTotalPrice(parsedData.allTransports);
+        setTransportTotalPrice(initialTotalTransportPrice);
         }
   
         if (parsedData.suggestions && parsedData.suggestions.length > 0) {
@@ -158,15 +160,20 @@ const CreateItineraryPage: React.FC<CreateItineraryPageProps> = ({ selectedDay, 
     // Ensure transports is an array and not undefined or null
     if (Array.isArray(transports)) {
       transports.forEach((transport, index) => {
-        if (transport?.details) {  // Ensure transport details are defined
-          transport.details.forEach((detail, detailIndex) => {
-            if (index === 0 && detailIndex === 0) {
-              totalTransportPrice += detail.priceTo; // Add priceTo for the first transport only
-            }
-          });
-        }
+          if (transport?.details) {
+              transport.details.forEach((detail, detailIndex) => {
+                  // For the first detail, add both priceFrom[0] and priceTo[0]
+                  if (index === 0 && detailIndex === 0) {
+                      totalTransportPrice += (detail.priceFrom || 0) + (detail.priceTo || 0);
+                  } else {
+                      // For subsequent details, add both priceTo and priceFrom values
+                      totalTransportPrice +=  (detail.priceFrom || 0);
+                  }
+              });
+          }
       });
-    }
+  }
+  
   
     return totalTransportPrice;
   };
@@ -283,8 +290,7 @@ const handleAddTransport = (newTransportDetail: TransportDetail) => {
 const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes: Note[], transportIndex: number) => {
   setAllTransports(prevTransportState => {
     const updatedTransports = [...prevTransportState];
-
-    // Update or add the transport at the specified index
+    
     if (updatedTransports[transportIndex]) {
       updatedTransports[transportIndex] = {
         ...updatedTransports[transportIndex],
@@ -298,25 +304,7 @@ const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes
       });
     }
 
-    saveTransportData(updatedTransports);
-
-    // Calculate total transport price
-    let totalTransportPrice = 0;
-    updatedTransports.forEach((transport, index) => {
-      // Access all the details in each transport and sum priceFrom for all steps
-      transport.details.forEach((detail, detailIndex) => {
-        if (index === 0 && detailIndex === 0) {
-          // Add the priceTo from the first detail of the first transport only
-          totalTransportPrice += detail.priceTo;
-        }
-        // Add the priceFrom for all details across all transports
-        totalTransportPrice += detail.priceFrom;
-      });
-    });
-
-    // Update the transport total price
-    setTransportTotalPrice(totalTransportPrice);
-
+    saveTransportData(updatedTransports); // Ensure this saves correctly
     return updatedTransports;
   });
 };
@@ -591,13 +579,13 @@ const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes
   
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen ">
       <div className="w-full h-full  relative scrollbar-hide scrollbar-custom">
         {/* Summary Section */}
-        <div className="flex flex-cols-5 gap-3 lg:gap-14 justify-center mt-2 mb-6 overflow-visible">
+        <div className="flex flex-cols-5 gap-3 lg:gap-10 mx-2 justify-center mt-2 mb-6 overflow-visible">
           {/* Total Price - Transportation */}
           <div 
-            className="flex px-1 flex-col items-center justify-center  lg:w-28 lg:h-28  w-22 h-22  bg-white rounded-lg shadow-lg"
+            className="flex px-1 flex-col items-center justify-center  lg:w-32 lg:h-28  w-22 h-22  bg-white rounded-lg shadow-lg"
             style={{
               border: '2px solid transparent',
               backgroundImage: 'linear-gradient(white, white), linear-gradient(to right, #4CAF50, #81C784)',
@@ -612,7 +600,7 @@ const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes
 
           {/* Total Price - Items & Locations */}
           <div 
-            className="flex px-1 flex-col items-center justify-center lg:w-28 lg:h-28  w-22 h-22 bg-white rounded-lg shadow-lg"
+            className="flex px-1 flex-col items-center justify-center lg:w-32 lg:h-28  w-22 h-22 bg-white rounded-lg shadow-lg"
             style={{
               border: '2px solid transparent',
               backgroundImage: 'linear-gradient(white, white), linear-gradient(to right, #FF5722, #FF8A65)',
@@ -627,7 +615,7 @@ const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes
 
           {/* Total Locations */}
           <div 
-            className="flex px-1 flex-col items-center justify-center lg:w-28 lg:h-28  w-22 h-22 bg-white rounded-lg shadow-lg"
+            className="flex px-1 flex-col items-center justify-center lg:w-32 lg:h-28  w-22 h-22 bg-white rounded-lg shadow-lg"
             style={{
               border: '2px solid transparent',
               backgroundImage: 'linear-gradient(white, white), linear-gradient(to right, #2196F3, #64B5F6)',
@@ -644,7 +632,7 @@ const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes
 
           {/* Total Activities */}
           <div 
-            className="flex px-1 flex-col items-center justify-center lg:w-28 lg:h-28  w-22 h-22 bg-white rounded-lg shadow-lg"
+            className="flex px-1 flex-col items-center justify-center lg:w-32 lg:h-28  w-22 h-22 bg-white rounded-lg shadow-lg"
             style={{
               border: '2px solid transparent',
               backgroundImage: 'linear-gradient(white, white), linear-gradient(to right, #FFEB3B, #FFC107)',
@@ -659,7 +647,7 @@ const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes
 
            {/* Total Notes by Theme */}
            <div 
-            className="flex px-3  flex-col items-center justify-center lg:w-28 lg:h-28  w-22 h-22  bg-white rounded-lg shadow-lg"
+            className="flex px-3  flex-col items-center justify-center lg:w-32 lg:h-28  w-22 h-22  bg-white rounded-lg shadow-lg"
             style={{
               border: '2px solid transparent',
               backgroundImage: 'linear-gradient(white, white), linear-gradient(to right, #9C27B0, #BA68C8)',
@@ -717,6 +705,7 @@ const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes
             {index < locationsState.length - 1 && (
               <div className="mb-6"> {/* Added margin bottom here */}
                 <TransportComponent
+                 key={`${selectedDay}-${index}-${allTransports[index]?.details?.length || 0}`} 
   googleLoaded={googleLoaded}
   startLocation={locationsState[index]}
   endLocation={locationsState[index + 1]}
@@ -732,12 +721,12 @@ const handleTransportDataUpdate = (newTransportDetails: TransportDetail[], notes
           </React.Fragment>
         ))}
 
-        <div className="flex justify-center mt-8 ">
+        <div className="flex justify-center  mt-2   lg:mt-12 ">
           <button
             onClick={addInputField}
-            className="w-24 h-24 mb-32   flex flex-col items-center justify-center border-4 border-blue-500 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out"
+            className="w-16 h-16 lg:w-24 lg:h-24 lg:mb-32 mb-8   flex flex-col items-center justify-center border-4 border-blue-500 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out"
           >
-            <FaPlus className="h-10 w-10 mb-1" />
+            <FaPlus className="h-8 w-8 " />
           </button>
         </div>  
       </div>

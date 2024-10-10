@@ -68,26 +68,27 @@ const Transport: React.FC<TransportProps> = ({
     };
 
     const handleAddTransport = () => {
-        const newTransportDetail: TransportDetail = {
-            typeTo: newTransportTypeTo,
-            nameTo: newTransportNameTo,
-            priceTo: newTransportPriceTo,
-            typeFrom: newTransportTypeFrom,
-            nameFrom: newTransportNameFrom,
-            priceFrom: newTransportPriceFrom,
-            destination: newDestination,
-        };
-
-        const updatedTransportDetails = [...currentTransportDetails, newTransportDetail];
-        setCurrentTransportDetails(updatedTransportDetails);
-        setIsAddingDetail(false);
-
-        if (updatedTransportDetails !== currentTransportDetails) {
-            onTransportDataUpdate(updatedTransportDetails, currentNotes, transportIndex);
-        }
-
-        onTransportPriceUpdate(calculateTotalPrice() + newTransportPriceTo + newTransportPriceFrom);
-    };
+      const newTransportDetail: TransportDetail = {
+          typeTo: newTransportTypeTo,
+          nameTo: newTransportNameTo,
+          priceTo: newTransportPriceTo,
+          typeFrom: newTransportTypeFrom,
+          nameFrom: newTransportNameFrom,
+          priceFrom: newTransportPriceFrom,
+          destination: newDestination,
+      };
+  
+      const updatedTransportDetails = [...currentTransportDetails, newTransportDetail];
+      setCurrentTransportDetails(updatedTransportDetails);
+      setIsAddingDetail(false);
+  
+      // Immediately update the parent component with new details
+      onTransportDataUpdate(updatedTransportDetails, currentNotes, transportIndex);
+  
+      // Update total price
+      onTransportPriceUpdate(calculateTotalPrice() + newTransportPriceTo + newTransportPriceFrom);
+  };
+  
 
     const handleSaveNote = () => {
         if (newNoteText && currentTheme) {
@@ -148,7 +149,7 @@ const Transport: React.FC<TransportProps> = ({
     };
 
     return (
-        <div className="p-4 bg-gray-100 rounded-lg shadow-lg text-black">
+        <div className="p-4 bg-gray-100 2xl:mx-10 rounded-lg shadow-lg text-black">
           <div className="flex flex-col lg:flex-row justify-between">
             
             {/* Transport Detail Inputs on the Left */}
@@ -156,12 +157,12 @@ const Transport: React.FC<TransportProps> = ({
               
               {/* First Transport Input Section */}
               <div className="mb-4">
-                <label className="block mb-2 font-semibold">Transport Mode:</label>
+                <label className="block mb-2  text-md font-semibold">Transport Mode:</label>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <select
                     value={newTransportTypeTo}
                     onChange={(e) => setNewTransportTypeTo(e.target.value)}
-                    className="block w-full sm:w-1/3 p-2 border border-gray-300 rounded-lg bg-white text-black"
+                    className="block w-full sm:w-1/3 p-2 text-sm border border-gray-300 rounded-lg bg-white text-black"
                   >
                     {/* Transport Mode Options */}
                     <option value="Walking">Walking</option>
@@ -181,7 +182,7 @@ const Transport: React.FC<TransportProps> = ({
                     value={newTransportNameTo || ""}
                     onChange={(e) => setNewTransportNameTo(e.target.value)}
                     placeholder="Name"
-                    className="block w-full sm:w-1/3 p-2 border border-gray-300 rounded-lg bg-white text-black"
+                    className="block w-full sm:w-1/3 p-2 border text-sm border-gray-300 rounded-lg bg-white text-black"
                   />
       
                   <input
@@ -189,7 +190,7 @@ const Transport: React.FC<TransportProps> = ({
                     value={newTransportPriceTo || ""}
                     onChange={(e) => setNewTransportPriceTo(parseFloat(e.target.value))}
                     placeholder="Price ($)"
-                    className="block w-full sm:w-1/3 p-2 border border-gray-300 rounded-lg bg-white text-black"
+                    className="block w-full sm:w-1/3 p-2 border text-sm border-gray-300 rounded-lg bg-white text-black"
                   />
                 </div>
               </div>
@@ -201,10 +202,10 @@ const Transport: React.FC<TransportProps> = ({
                   type="text"
                   value={newDestination || ""}
                   onChange={(e) => handleAutocompleteChange(e.target.value, setNewDestination, setFinishSuggestionsTo)}
-                  className="block w-full p-2 border rounded-lg bg-white text-black"
+                  className="block w-full  text-sm p-2 border rounded-lg bg-white text-black"
                 />
                 {/* Autocomplete Suggestions */}
-                <ul className="border rounded-lg bg-white text-black mt-2">
+                <ul className="border rounded-lg bg-white text-sm text-black mt-2">
                   {finishSuggestionsTo.map((suggestion) => (
                     <li
                       key={suggestion.place_id}
@@ -224,7 +225,7 @@ const Transport: React.FC<TransportProps> = ({
                   <select
                     value={newTransportTypeFrom}
                     onChange={(e) => setNewTransportTypeFrom(e.target.value)}
-                    className="block w-full sm:w-1/3 p-2 border border-gray-300 rounded-lg bg-white text-black"
+                    className="block w-full sm:w-1/3 p-2 border text-sm border-gray-300 rounded-lg bg-white text-black"
                   >
                     {/* Transport Mode Options */}
                     <option value="Walking">Walking</option>
@@ -244,7 +245,7 @@ const Transport: React.FC<TransportProps> = ({
                     value={newTransportNameFrom}
                     onChange={(e) => setNewTransportNameFrom(e.target.value)}
                     placeholder="Name"
-                    className="block w-full sm:w-1/3 p-2 border border-gray-300 rounded-lg bg-white text-black"
+                    className="block w-full sm:w-1/3 p-2 border text-sm border-gray-300 rounded-lg bg-white text-black"
                   />
       
                   <input
@@ -252,13 +253,13 @@ const Transport: React.FC<TransportProps> = ({
                     value={newTransportPriceFrom}
                     onChange={(e) => setNewTransportPriceFrom(parseFloat(e.target.value))}
                     placeholder="Price ($)"
-                    className="block w-full sm:w-1/3 p-2 border border-gray-300 rounded-lg bg-white text-black"
+                    className="block w-full sm:w-1/3 p-2 border text-sm border-gray-300 rounded-lg bg-white text-black"
                   />
                 </div>
               </div>
       
               {/* Add Transport Button */}
-              <div className="flex-1 mt-4 mb-2">
+              <div className="flex-1 mt-4 text-sm mb-2">
                 <button
                   onClick={handleAddTransport}
                   className="p-2 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-600"
@@ -269,12 +270,12 @@ const Transport: React.FC<TransportProps> = ({
             </div>
       
             {/* Added Transport Details on the Right */}
-            <div className="w-full lg:w-1/2 pl-0 lg:pl-10 mt-2 lg:mt-0">
+            <div className="w-full lg:w-1/2 pl-0 lg:pl-10 mt-2 lg:mt-0 max-h-72  overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-blue-500 scrollbar-track-gray-200">
               {currentTransportDetails.length > 0 && (
-                <div className="relative w-full max-h-80 overflow-y-auto">
+                <div className="relative w-full max-h-80 overflow-y-visible">
                   {/* Dotted Vertical Line */}
                   <div className="absolute left-12 border-l-2 border-dotted border-blue-500"
-                    style={{ top: '-0.5rem', bottom: `calc(100% - ${currentTransportDetails.length * 6}rem - 7rem)` }}
+                    style={{ top: '-0.5rem', bottom: `calc(100% - ${currentTransportDetails.length * 6}rem - 5.3rem )` }}
                   ></div>
       
                   {/* Render Transport Details */}
@@ -351,28 +352,28 @@ const Transport: React.FC<TransportProps> = ({
       <div className="flex flex-wrap gap-4 mb-4 justify-between">
         <button
           onClick={() => handleNoteButtonClick('Watch Out')}
-          className="flex-1 flex items-center justify-center gap-1 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-1 px-4 rounded"
+          className="flex-1 flex items-center justify-center gap-1 text-sm bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-1 px-4 rounded"
         >
           <FaExclamationTriangle />
           Watch Out
         </button>
         <button
           onClick={() => handleNoteButtonClick('To Avoid')}
-          className="flex-1 flex items-center justify-center gap-1 bg-red-400 hover:bg-red-500 text-white font-bold py-1 px-4 rounded"
+          className="flex-1 flex items-center justify-center gap-1 text-sm bg-red-400 hover:bg-red-500 text-white font-bold py-1 px-4 rounded"
         >
           <FaTimesCircle />
           To Avoid
         </button>
         <button
           onClick={() => handleNoteButtonClick('Profit')}
-          className="flex-1 flex items-center justify-center gap-1 bg-green-400 hover:bg-green-500 text-white font-bold py-1 px-2 rounded"
+          className="flex-1 flex items-center justify-center gap-1 text-sm bg-green-400 hover:bg-green-500 text-white font-bold py-1 px-2 rounded"
         >
           <FaDollarSign />
           Profit
         </button>
         <button
           onClick={() => handleNoteButtonClick("Don't Forget")}
-          className="flex-1 flex items-center justify-center gap-1 bg-blue-400 hover:bg-blue-500 text-white font-bold py-1 px-2 rounded"
+          className="flex-1 flex items-center justify-center gap-1 text-sm bg-blue-400 hover:bg-blue-500 text-white font-bold py-1 px-2 rounded"
         >
           <FaLightbulb />
           Don't Forget

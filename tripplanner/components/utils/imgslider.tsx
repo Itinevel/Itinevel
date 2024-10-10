@@ -6,6 +6,9 @@ import { FiGlobe, FiBox, FiStar } from 'react-icons/fi'; // Using FontAwesome as
 import testImage2 from '../../public/images/img2.jpg'; // Ensure image paths are correct
 import testImage3 from '../../public/images/img3.jpeg';
 import { IoIosArrowDroprightCircle, IoIosArrowDropleftCircle } from "react-icons/io";
+import { useRouter } from 'next/navigation';
+
+
 const ImageSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalSlides = 5; // Total number of slides
@@ -16,6 +19,8 @@ const ImageSlider = () => {
     testImage3.src,
     testImage2.src,
   ];
+
+  const router = useRouter();
 
   // Automatically move to the next slide every 5 seconds
   useEffect(() => {
@@ -35,11 +40,14 @@ const ImageSlider = () => {
   const goToNext = () => {
     setCurrentIndex(currentIndex === totalSlides - 1 ? 0 : currentIndex + 1);
   };
+  const handleBrowseClick = () => {
+    router.push('/market');
+  };
 
   return (
-    <div className="relative w-full max-w-screen-xl mx-auto  overflow-hidden rounded h-[250px] lg:h-[500px] group">
+    <div className="relative w-full max-w-screen-xl mx-auto  shadow-2xl overflow-hidden rounded h-[250px] lg:h-[500px] group">
       {/* Image Container */}
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full shadow-4xl">
         {images.map((image, index) => (
           <img
             key={index}
@@ -85,38 +93,41 @@ const ImageSlider = () => {
         {/* Icons and Labels */} 
         <div className="flex space-x-3 lg:space-x-14 text-white">
           {/* Globe Icon */}
-          <div className="flex items-center space-x-2 ">
+          <div className="flex items-center space-x-1 lg:space-x-2 ">
             <FiGlobe className="text-l lg:text-3xl" /> {/* Responsive icon size */}
             <div className="flex flex-col">
-              <p className="text-sm lg:text-[18px] font-semibold">50</p>
-              <p className="text-xs lg:text-[17px]">Countries</p>
+              <p className="text-[11px] lg:text-[18px] font-semibold">50</p>
+              <p className="text-[11px] lg:text-[17px]">Countries</p>
             </div>
           </div>
 
           {/* Plans Icon */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 lg:space-x-2 ">
             <FiBox className="text-l lg:text-3xl" />
             <div className="flex flex-col">
-              <p className="text-sm lg:text-[18px] font-semibold">120</p>
-              <p className="text-xs lg:text-[17px]">Plans</p>
+              <p className="text-[11px] lg:text-[18px] font-semibold">120</p>
+              <p className="text-[11px] lg:text-[17px]">Plans</p>
             </div>
           </div>
 
           {/* Top Sellers Icon */}
-          <div className="flex items-center space-x-2 ">
+          <div className="flex items-center space-x-1 lg:space-x-2 ">
             <FiStar className="text-l lg:text-3xl mt-1 " />
             <div className="flex flex-col">
-              <p className="text-sm sm:text-[18px] font-semibold">25</p>
-              <p className="text-xs lg:text-[17px]"> Sellers</p>
+              <p className="text-[11px] sm:text-[18px] font-semibold">25</p>
+              <p className="text-[11px] lg:text-[17px]"> Sellers</p>
             </div>
           </div>
         </div>
 
         {/* Browse Itineraries Button */}
-        <button className="bg-gradient-to-r from-blue-500 to-green-400 text-white px-4 py-2 lg:px-8 rounded-xl shadow-lg text-sm lg:text-base hover:from-blue-600 hover:to-green-500 transition-all duration-300 flex items-center hover:scale-105">
-  Browse
-  <FaRegArrowAltCircleRight className="ml-2 w-4 h-4 lg:w-6 lg:h-6" />
-</button>
+        <button
+      onClick={handleBrowseClick}
+      className="bg-gradient-to-r from-blue-500 to-green-400 text-white px-2 py-2 lg:px-8 rounded-xl shadow-lg text-xs lg:text-base hover:from-blue-600 hover:to-green-500 transition-all duration-300 flex items-center hover:scale-105"
+    >
+      Browse
+      <FaRegArrowAltCircleRight className="ml-1 w-4 h-4 lg:w-6 lg:h-6" />
+    </button>
 
       </div>
     </div>
